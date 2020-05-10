@@ -2,8 +2,6 @@
 
 Simple dependency management for Bazel.
 
-## Usage
-
 ## API
 
 ### `fetch_dependencies`
@@ -24,10 +22,17 @@ fetch_dependencies(
 )
 ```
 
-### Example
+### Example Usage
 ```python
-load("@bazel_dependency_manager//:repo_rules.bzl", "fetch_dependencies")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "bazel_dependency_manager",
+    urls = ["https://github.com/Slowki/bazel-dependency-manager/archive/ad9c621307dff1300303981dde0425795bd301e9.tar.gz"],
+    strip_prefix = "bazel-dependency-manager-ad9c621307dff1300303981dde0425795bd301e9",
+    sha256 = "9d1c2b2c2d1698fb7693d354a7c09f999fd2fe8d7a8c8aa1ea593e2c0902c054",
+)
 
+load("@bazel_dependency_manager//:repo_rules.bzl", "fetch_dependencies")
 fetch_dependencies(
     {
         "rules_cc": {
@@ -55,7 +60,7 @@ fetch_dependencies(
 )
 ```
 
-### Supported URI Formats
+## Supported URI Formats
 * `http` & `https` - `https://site.tld/path/to/archive`
 * `github` - `"github:organization/repository#version"` or `"github:github.corp.internal/organization/repository#version"`
 * `gitlab` - `"gitlab:organization/repository#version"` or `"gitlab:gitlab.corp.internal/organization/repository#version"`
